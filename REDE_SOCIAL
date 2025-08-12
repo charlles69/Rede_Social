@@ -1,0 +1,52 @@
+CREATE DATABASE IF NOT EXISTS Database_rede_social
+DEFAULT CHARACTER SET utf8mb4
+DEFAULT COLLATE utf8mb4_general_ci;
+
+USE Database_rede_social;
+
+CREATE TABLE IF NOT EXISTS USUARIO
+(   EMAIL VARCHAR(100) , 
+    NOME VARCHAR(15) ,
+    SENHA VARCHAR (20) , 
+    ID_USUARIO BIGINT NOT NULL AUTO_INCREMENT PRIMARY KEY );
+    
+CREATE TABLE IF NOT EXISTS POSTAGEM
+(   CONTEUDO_POSTAGEM TEXT, 
+    LIKES BIGINT ,
+    ID_POSTAGEM BIGINT NOT NULL AUTO_INCREMENT  KEY, 
+    ID_USUARIO BIGINT NOT NULL);
+    
+ALTER TABLE POSTAGEM
+ADD CONSTRAINT ID_USUARIO
+FOREIGN KEY (ID_USUARIO)
+REFERENCES USUARIO (ID_USUARIO);
+
+ALTER TABLE POSTAGEM
+ADD CONSTRAINT FK_POSTAGEM_USUARIO
+FOREIGN KEY (ID_USUARIO)
+REFERENCES USUARIO(ID_USUARIO);
+
+
+DESCRIBE POSTAGEM;
+
+
+INSERT INTO USUARIO (EMAIL, NOME, SENHA)
+VALUES ('joao.silva@email.com', 'JoãoSilva', 'senha123'),
+       ('maria.souza@email.com', 'MariaSouza', 'senha456'),
+       ('pedro.almeida@email.com', 'PedroAlmeida', 'senha789');
+
+INSERT INTO POSTAGEM (CONTEUDO_POSTAGEM, LIKES, ID_USUARIO)
+VALUES ('Minha primeira postagem na rede social!', 0, 1),
+       ('Adorei o novo filme que assisti!', 15, 2),
+       ('Dia de sol perfeito para um passeio.', 32, 3),
+       ('Programando a noite toda!', 5, 1);
+       
+       
+
+SELECT NOME, EMAIL FROM USUARIO;
+
+
+SELECT * FROM POSTAGEM WHERE LIKES > 10;
+
+
+SELECT CONTEUDO_POSTAGEM FROM POSTAGEM WHERE ID_USUARIO = 1;
